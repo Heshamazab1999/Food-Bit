@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "545861174134",
+    "project_id": "food-bit",
+    "storage_bucket": "food-bit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545861174134:android:2f0d0ea20c98b11f8f3057",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545861174134-d4jgptk1lkr92d28sn1pmkmmlbt802lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5NN1r0p3zbwx3lzxciJL3f3924wrBoAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545861174134-d4jgptk1lkr92d28sn1pmkmmlbt802lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
