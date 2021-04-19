@@ -4,7 +4,6 @@ import 'package:app/Controller/database_controller.dart';
 import 'package:app/Controller/profile_controller.dart';
 import 'package:app/enum/enums.dart';
 import 'package:app/models/sqllite_model.dart';
-import 'package:app/models/validation_model.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/services/order_services.dart';
@@ -17,45 +16,23 @@ class OrderController extends BaseController {
   final _url = '01004479160'.obs;
   final _name = ''.obs;
   final _image = ''.obs;
-  final _street = Valid().obs;
   final _price = ''.obs;
   final _quantity = ''.obs;
-  final _selectCountry = Valid().obs;
   RxBool _saving = false.obs;
 
   String get name => _name.value;
 
   String get image => _image.value;
 
-  Valid get street => _street.value;
-
   String get price => _price.value;
 
   String get quantity => _quantity.value;
-
-  Valid get selectCountry => _selectCountry.value;
 
   String get url => _url.value;
 
   List<SqlLiteModel> get sqlLiteModel => _sqlLiteModel;
 
   bool get saving => _saving.value;
-
-  getCountry(String country) {
-    if (country.trim().length < 5) {
-      _selectCountry.value = Valid(error: "Enter your Country");
-    } else {
-      _selectCountry.value = Valid(value: country);
-    }
-  }
-
-  getStreet(String street) {
-    if (street.trim().length < 5) {
-      _street.value = Valid(error: "Enter your Street");
-    } else {
-      _street.value = Valid(value: street);
-    }
-  }
 
   @override
   onInit() async {

@@ -29,7 +29,8 @@ class MyLocationScreen extends StatelessWidget {
                   _controller.markLocation();
                 },
                 markers: _controller.marker,
-              ),
+
+        ),
       )),
     );
   }

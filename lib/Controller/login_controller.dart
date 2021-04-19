@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:app/services/login_service.dart';
+
 class LoginController extends BaseController {
   LoginServices loginServices = new LoginServices();
   final _username = Valid().obs;
@@ -52,11 +53,10 @@ class LoginController extends BaseController {
           "تاكد من ادخال القيم بشكل صحيح !", "خطا بالادخال", context);
     }
   }
-  handleSignIn()  {
+  handleSignIn() async {
     try {
-  final user= loginServices.googleSignIn();
-       AuthController.to.changeLoggedIn(true, user);
-print(user);
+      await loginServices.signInWithGoogle();
+
     } catch (error) {
       print(error);
     }

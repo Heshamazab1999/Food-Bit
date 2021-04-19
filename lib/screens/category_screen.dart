@@ -99,7 +99,7 @@ class CategoryScreen extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.all(10),
                           child: SizedBox(
-                            height: MediaQuery.of(context).size.height,
+                            height:500,
                             child:  StaggeredGridView.countBuilder(
                               staggeredTileBuilder: (int index) =>
                               new StaggeredTile.count(2, index.isOdd ? 2.5 : 2.6),

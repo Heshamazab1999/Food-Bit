@@ -9,17 +9,16 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:app/models/favourite_model.dart';
 import 'package:app/splflite/favourite_database.dart';
-import 'dart:math' show cos, sqrt, asin;
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class ProfileController extends BaseController {
   static ProfileController to = Get.find();
   var _marker = HashSet<Marker>().obs;
   final _address = ''.obs;
   Position _position = new Position();
-  final _distance = ''.obs;
+  final _distance = 0.0.obs;
   List _favouriteModel = <FavouriteModel>[].obs;
   final _isData = true.obs;
-
 
   Position get position => _position;
 
@@ -31,7 +30,7 @@ class ProfileController extends BaseController {
 
   List<FavouriteModel> get favouriteModel => _favouriteModel;
 
-  String get distance => _distance.value;
+  double get distance => _distance.value;
 
   @override
   Future<void> onInit() async {
@@ -40,8 +39,9 @@ class ProfileController extends BaseController {
     await determinePosition();
     await getCityName();
     myPolygon();
-    calculate();
     time();
+    getDistance();
+    getPolyline();
     getAllProducts();
     setSate(ViewState.idle);
   }
@@ -105,10 +105,13 @@ class ProfileController extends BaseController {
   }
 
   markLocation() {
-    marker.add(Marker(
-      markerId: MarkerId("1"),
-      position: LatLng(position.latitude, position.longitude),
-    ));
+    marker.add(
+      Marker(
+        icon: BitmapDescriptor.defaultMarkerWithHue(90),
+        markerId: MarkerId("1"),
+        position: LatLng(position.latitude, position.longitude),
+      ),
+    );
     marker.add(Marker(
       markerId: MarkerId("2"),
       position: LatLng(31.20384501928389, 29.88524201888047),
@@ -132,7 +135,7 @@ class ProfileController extends BaseController {
     return polygonSet;
   }
 
-   getCityName() async {
+  getCityName() async {
     final addresses = await Geocoder.local.findAddressesFromCoordinates(
         new Coordinates(position.latitude, position.longitude));
     var first = addresses.first.addressLine;
@@ -141,31 +144,63 @@ class ProfileController extends BaseController {
     print(moonLanding);
   }
 
-  double totalDistance = 0.0;
-
-  calculate() {
-    var distance = Geolocator.distanceBetween(position.latitude,
-        position.longitude, 31.20384501928389, 29.88524201888047);
-    _distance.value = distance.toString();
-    totalDistance = coordinateDistance(position.latitude, position.latitude,
-      31.0106,30.5503,);
-    print(totalDistance.toStringAsFixed(2));
-  }
-
-  double coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
-  }
-
   final _now = DateTime.now().obs;
 
   DateTime get now => _now.value;
 
   time() {
-    print('timestamp: ${now.hour}:${now.minute}:${now.second}');
+    print('timestamp: ${now.hour}:${now.minute}:${now.second}:');
+  }
+
+  Future<double> getDistance() async {
+    try {
+      final currentPosition = await determinePosition();
+      print(currentPosition.latitude);
+      var d = Geolocator.distanceBetween(position.latitude, position.longitude,
+              31.20384501928389, 29.88524201888047) *
+          0.001;
+      print("distance$d");
+      _distance.value = d;
+    } catch (e) {
+      print(e);
+      print('exception');
+    }
+
+    return 0;
+  }
+
+  PolylinePoints polylinePoints = PolylinePoints();
+  Map<PolylineId, Polyline> polylines = {};
+
+  void getPolyline() async {
+    List<LatLng> polylineCoordinates = [];
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyAxDyH5_GhvLdIXRyTN1neSnHZJcL3Eejg",
+      PointLatLng(position.latitude, position.longitude),
+      PointLatLng(31.20384501928389, 29.88524201888047),
+      travelMode: TravelMode.driving,
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      print(result.errorMessage);
+    }
+    addPolyLine(polylineCoordinates);
+  }
+
+
+  addPolyLine(List<LatLng> polylineCoordinates) {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+      width: 8,
+      visible: true,
+    );
+    polylines[id] = polyline;
   }
 }

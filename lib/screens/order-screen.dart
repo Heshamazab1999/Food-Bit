@@ -90,7 +90,6 @@ class OrderScreen extends StatelessWidget {
                                           backgroundColor: K.mainColor),
                                       onPressed: () {
                                         _controller.sendOrder();
-                                        _controller.sqlLiteModel.clear();
                                       },
                                       child: Text(
                                         'Make Order',

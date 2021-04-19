@@ -8,6 +8,7 @@ class CategoryModel {
   String review;
   String label;
   String key;
+  bool isSelect;
 
   CategoryModel(
       {this.image,
@@ -15,6 +16,7 @@ class CategoryModel {
       this.price,
       this.key,
       this.rate,
+      this.isSelect,
       this.review,
       this.label});
 
@@ -26,6 +28,7 @@ class CategoryModel {
     rate = json['rate'];
     review = json['review'];
     label = json['label'];
+    isSelect=json["isSelect"];
     key = snapshot.id;
   }
 
