@@ -12,6 +12,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Get.put(DataBaseController());
   runApp(MyApp());
+  R r = new R();
+  r.j='ggg';
+print(r.car);
 }
 
 class MyApp extends StatelessWidget {
@@ -20,10 +23,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp( 
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoute.splash_screen,
       getPages: AppScreen.screen,
     );
+  }
+}
+
+class R {
+  String car;
+
+  String get _car {
+    return car;
+  }
+
+  void set j(String car) {
+    this.car = car;
   }
 }

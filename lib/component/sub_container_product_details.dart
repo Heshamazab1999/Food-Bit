@@ -20,7 +20,7 @@ class SubContainerDetails extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Material(
         borderRadius: BorderRadius.circular(20),
-        elevation: 2,
+        elevation: 1,
         child: Container(
           height: 350,
           decoration: BoxDecoration(

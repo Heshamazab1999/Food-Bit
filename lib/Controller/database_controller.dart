@@ -1,5 +1,6 @@
 import 'package:app/Controller/base_controller.dart';
 import 'package:app/Routes/app_routes.dart';
+import 'package:app/constant.dart';
 import 'package:app/enum/enums.dart';
 import 'package:app/models/sqllite_model.dart';
 import 'package:app/splflite/database_app.dart';
@@ -31,7 +32,17 @@ class DataBaseController extends BaseController {
     for (int i = 0; i < _sqlLiteModel.length; i++) {
       if (_sqlLiteModel[i].name == sqlLiteModel.name) {
         return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Added Before Time"),
+          backgroundColor: K.mainColor,
+          width: 200,
+          duration: Duration(seconds: 1),
+          content: Text(
+            "Added Before Time",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          behavior: SnackBarBehavior.floating,
         ));
       }
     }
@@ -45,6 +56,9 @@ class DataBaseController extends BaseController {
     }
     print(_totalPrice);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: K.mainColor,
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -114,8 +114,7 @@ class CategoryScreen extends StatelessWidget {
                                           _controller
                                               .setState(_controller.isSelected);
                                           ProfileController.to.insertProduct(
-                                              FavouriteModel(
-                                                name: _controller
+                                              FavouriteModel(                                                 name: _controller
                                                     .category[index].name,
                                                 price: _controller
                                                     .category[index].price,
@@ -133,7 +132,7 @@ class CategoryScreen extends StatelessWidget {
                                                     _controller.category[index],
                                               ));
                                         },
-                                        color: _controller.isSelected
+                                        color: _controller.isSelected==true
                                             ? K.mainColor
                                             : K.IconColor,
                                         image: _controller.isSearched

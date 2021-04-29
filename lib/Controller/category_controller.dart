@@ -39,7 +39,12 @@ class CategoryController extends BaseController {
     setSate(ViewState.idle);
   }
 
+
+
+
   setState(bool isLike) {
+    _isSelected.value=isLike;
+
     if (isLike = true) {
       _isSelected.value = isLike;
     } else if (isLike = false) {
