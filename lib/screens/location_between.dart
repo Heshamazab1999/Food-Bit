@@ -29,12 +29,10 @@ class LocationBetween extends StatelessWidget {
               onMapCreated: (GoogleMapController googleMapController) {
                 _controller.determinePosition();
                 _controller.markLocation();
-                _controller.myPolygon();
-                _controller.getPolyline();
+              //  _controller.myPolygon();
               },
               markers: _controller.marker,
-              polygons: _controller.myPolygon(),
-              polylines: Set<Polyline>.of(_controller.polylines.values),
+            //  polygons: _controller.myPolygon(),
             )),
     ));
   }

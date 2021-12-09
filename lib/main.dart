@@ -1,5 +1,4 @@
 import 'package:app/Controller/database_controller.dart';
-import 'package:app/Controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:app/Routes/app_routes.dart';
@@ -12,13 +11,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Get.put(DataBaseController());
   runApp(MyApp());
-  R r = new R();
-  r.j='ggg';
-print(r.car);
 }
 
 class MyApp extends StatelessWidget {
-  final controllerLocation = Get.put(ProfileController());
   final controller = Get.put(AuthController());
 
   @override
@@ -31,14 +26,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class R {
-  String car;
-
-  String get _car {
-    return car;
-  }
-
-  void set j(String car) {
-    this.car = car;
-  }
-}

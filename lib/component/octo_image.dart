@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+
 class LoadImage extends StatelessWidget {
   final String image;
-  final String loadImage;
-  LoadImage({this.image,this.loadImage});
+  LoadImage({this.image});
   @override
   Widget build(BuildContext context) {
     return OctoImage(
@@ -17,7 +17,7 @@ class LoadImage extends StatelessWidget {
         fit: BoxFit.cover
       ),
       errorBuilder: (context, url, error) {
-        return SvgPicture.asset(loadImage,fit: BoxFit.cover,);
+        return BlurHash(hash:'LEHV6nWB2yk8pyo0adR*.7kCMdnj');
       },
       fit: BoxFit.cover,
     );

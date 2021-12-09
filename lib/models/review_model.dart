@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProductModel {
+class ReviewModel {
   String image;
   String name;
   String key;
 
-  ProductModel({this.image, this.name, this.key});
+  ReviewModel({this.image, this.name, this.key});
 
-  factory ProductModel.fromSnapshot(DocumentSnapshot snapshot) {
-    return ProductModel(
-        image : snapshot['image'],
-        name : snapshot['name'],
-        key : snapshot.id,
+  factory ReviewModel.fromSnapshot(DocumentSnapshot snapshot) {
+    return ReviewModel(
+      image : snapshot['image'],
+      name : snapshot['name'],
+      key : snapshot.id,
     );
 
   }

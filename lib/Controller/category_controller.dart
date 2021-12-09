@@ -18,7 +18,6 @@ class CategoryController extends BaseController {
   final _categorySearch = <CategoryModel>[].obs;
 
   final _isSearched = false.obs;
-  final _isSelected = false.obs;
 
   List<ProductModel> get product => _product;
 
@@ -28,8 +27,6 @@ class CategoryController extends BaseController {
 
   bool get isSearched => _isSearched.value;
 
-  bool get isSelected => _isSelected.value;
-
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -37,19 +34,6 @@ class CategoryController extends BaseController {
     _category.assignAll(await _services.getAllCategory());
     _product.assignAll(await _service.getAllCategory());
     setSate(ViewState.idle);
-  }
-
-
-
-
-  setState(bool isLike) {
-    _isSelected.value=isLike;
-
-    if (isLike = true) {
-      _isSelected.value = isLike;
-    } else if (isLike = false) {
-      _isSelected.value = false;
-    }
   }
 
   onFilter(String string) {
@@ -65,4 +49,6 @@ class CategoryController extends BaseController {
           .toList());
     }
   }
+
+
 }

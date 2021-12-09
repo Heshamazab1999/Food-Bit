@@ -13,7 +13,7 @@ class MathematicalContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Material(
           shadowColor: K.IconColor,
-          elevation: 1,
+          elevation: 2,
           color: K.secondColor,
           borderRadius: BorderRadius.circular(10),
           child: Container(

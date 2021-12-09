@@ -10,20 +10,20 @@ class UserModel {
 
   UserModel(
       {this.image,
-        this.name,
-        this.phone,
-        this.password,
-        this.username,
-        this.key});
+      this.name,
+      this.phone,
+      this.password,
+      this.username,
+      this.key});
 
-  UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final json = snapshot.data();
-    image = json["image"];
-    name = json["name"];
-    phone = json["phone"];
-    username = json["username"];
-    password = json["password"];
-    key = snapshot.id;
+  factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {
+    return UserModel(
+        image: snapshot["image"],
+        name: snapshot["name"],
+        phone: snapshot["phone"],
+        username: snapshot["username"],
+        password: snapshot["password"],
+        key: snapshot.id);
   }
 
   Map<String, dynamic> toJson() {

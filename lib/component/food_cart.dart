@@ -55,7 +55,6 @@ class FoodCart extends StatelessWidget {
                       ),
                       child: LoadImage(
                         image: image,
-                        loadImage: "assets/images/profile.svg",
                       ),
                     ),
                   ),

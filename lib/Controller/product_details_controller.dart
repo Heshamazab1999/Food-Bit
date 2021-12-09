@@ -1,33 +1,34 @@
-import 'dart:collection';
-import 'package:app/enum/enums.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:app/Controller/base_controller.dart';
+import 'package:app/enum/enums.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 
-class MyLocationController extends BaseController {
-  var _marker = HashSet<Marker>().obs;
+class ProductController extends BaseController {
   Position _position = new Position();
+  final _distance = 0.0.obs;
+  final _now = DateTime.now().obs;
+  RxBool _change = false.obs;
 
-  HashSet<Marker> get marker => _marker.value;
+  DateTime get now => _now.value;
 
   Position get position => _position;
+
+  double get distance => _distance.value;
+
+  bool get change => _change.value;
+
+  changes() {
+    _change.value = !_change.value;
+  }
 
   @override
   Future<void> onInit() async {
     super.onInit();
     setSate(ViewState.busy);
     await determinePosition();
-    await markLocation();
+    await getDistance();
+    time();
     setSate(ViewState.idle);
-  }
-
-  markLocation() {
-    marker.add(Marker(
-      markerId: MarkerId("1"),
-      position: LatLng(position.latitude, position.longitude),
-    ));
-    _marker.value = marker;
   }
 
   Future<Position> determinePosition() async {
@@ -51,8 +52,27 @@ class MyLocationController extends BaseController {
       }
     }
     return _position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high
+        desiredAccuracy: LocationAccuracy.high);
+  }
 
-    );
+  time() {
+    print('timestamp: ${now.hour}:${now.minute}:${now.second}:');
+  }
+
+  Future<double> getDistance() async {
+    try {
+      final currentPosition = await determinePosition();
+      print(currentPosition.latitude);
+      double d = Geolocator.distanceBetween(position.latitude,
+              position.longitude, 31.20384501928389, 29.88524201888047) *
+          0.001;
+      print("distance$d");
+      _distance.value = d;
+    } catch (e) {
+      print(e);
+      print('exception');
+    }
+
+    return 0;
   }
 }

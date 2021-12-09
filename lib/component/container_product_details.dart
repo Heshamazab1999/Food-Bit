@@ -11,7 +11,6 @@ class ProductDetailsContainer extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: LoadImage(
         image: image,
-        loadImage: "assets/images/loading.svg",
       ),
     );
   }

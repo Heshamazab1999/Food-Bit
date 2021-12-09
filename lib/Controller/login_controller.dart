@@ -17,10 +17,17 @@ class LoginController extends BaseController {
   TextEditingController editingControllerPassword = new TextEditingController();
 
   bool get saving => _saving.value;
+  RxBool _isPassword = true.obs;
+
+  bool get isPassword => _isPassword.value;
 
   Valid get username => _username.value;
 
   Valid get password => _password.value;
+
+  change() {
+    _isPassword.value = !_isPassword.value;
+  }
 
   changeUserName(String username) {
     if (username.trim().length < 5) {
@@ -46,19 +53,14 @@ class LoginController extends BaseController {
       UserModel user = await loginServices.login(
           context, _username.value.value, _password.value.value);
       _saving.value = false;
-
       AuthController.to.changeLoggedIn(true, user);
     } else {
       Utility.displayErrorAlert(
           "تاكد من ادخال القيم بشكل صحيح !", "خطا بالادخال", context);
     }
   }
-  handleSignIn() async {
-    try {
-      await loginServices.signInWithGoogle();
 
-    } catch (error) {
-      print(error);
-    }
+  reset() {
+    loginServices.reset(UserModel(username: _username.value.value));
   }
 }

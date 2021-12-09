@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app/Controller/base_controller.dart';
 import 'package:app/models/register_model.dart';
 import 'package:app/models/validation_model.dart';
+import 'package:app/services/auth_services.dart';
 import 'package:app/services/register_services.dart';
 import 'package:app/utility/utility.dart';
 import 'package:email_validator/email_validator.dart';
@@ -9,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:app/Controller/auth_controller.dart';
 
-class RegisterController extends BaseController {
+class EditController extends BaseController {
   SignUpServices services = new SignUpServices();
+  AuthServices authServices = AuthServices();
   final _name = Valid().obs;
   final _phone = Valid().obs;
   final _password = Valid().obs;
@@ -25,11 +26,12 @@ class RegisterController extends BaseController {
   TextEditingController editingControllerUserName = new TextEditingController();
 
   RxBool _saving = false.obs;
+
   RxBool _isPassword = true.obs;
 
-  bool get isPassword => _isPassword.value;
-
   bool get saving => _saving.value;
+
+  bool get isPassword => _isPassword.value;
 
   Valid get name => _name.value;
 
@@ -103,7 +105,7 @@ class RegisterController extends BaseController {
     }
   }
 
-  registerValidation(BuildContext context) async {
+  updateUser(BuildContext context) async {
     if (_name.value.isValid() &&
         _phone.value.isValid() &&
         _password.value.isValid() &&
@@ -111,17 +113,16 @@ class RegisterController extends BaseController {
         EmailValidator.validate(_username.value.value)) {
       _saving.value = true;
 
-      UserModel user = await services.register(
+      UserModel user = await services.updateUser(
           UserModel(
-              name: name.value,
-              password: password.value,
-              phone: phone.value,
-              username: username.value,
-              image: image),
+              image: _image.value,
+              name: _name.value.value,
+              password: _password.value.value,
+              phone: _phone.value.value,
+              username: _username.value.value),
           image);
+      authServices.updateStorage(user);
       _saving.value = false;
-
-      AuthController.to.changeLoggedIn(true, user);
     } else {
       Utility.displayErrorAlert(
           "تاكد من ادخال القيم بشكل صحيح !", "خطا بالادخال", context);

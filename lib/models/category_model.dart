@@ -21,14 +21,14 @@ class CategoryModel {
       this.label});
 
   CategoryModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final json = snapshot.data();
-    image = json['image'];
-    name = json['name'];
-    price = json['price'];
-    rate = json['rate'];
-    review = json['review'];
-    label = json['label'];
-    isSelect=json["isSelect"];
+    final Map<String, dynamic> doc = snapshot.data();
+    image = doc['image'];
+    name = doc['name'];
+    price = doc['price'];
+    rate = doc['rate'];
+    review = doc['review'];
+    label = doc['label'];
+    isSelect = doc["isSelect"];
     key = snapshot.id;
   }
 
@@ -40,7 +40,6 @@ class CategoryModel {
     map['rate'] = rate;
     map['review'] = review;
     map['label'] = label;
-
     return map;
   }
 }

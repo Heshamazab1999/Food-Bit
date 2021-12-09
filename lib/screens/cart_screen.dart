@@ -19,7 +19,7 @@ class CartScreen extends StatelessWidget {
         child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 1,
         title: Text(
           "Item Cart",
           style: GoogleFonts.aBeeZee(color: K.BlackColor, fontSize: 25),
@@ -32,8 +32,8 @@ class CartScreen extends StatelessWidget {
             child: IconButton(
               onPressed: () {},
               icon: Icon(
-                Icons.shopping_bag_rounded,
-                color: K.IconColor,
+                Icons.shopping_cart_outlined,
+                color: K.mainColor,
                 size: 30,
               ),
             ),
@@ -114,6 +114,9 @@ class CartScreen extends StatelessWidget {
                                 Get.toNamed(AppRoute.order_screen);
                               },
                               style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
                                   backgroundColor: K.mainColor),
                               child: Text(
                                 "Check Order",

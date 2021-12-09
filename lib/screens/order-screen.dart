@@ -20,7 +20,7 @@ class OrderScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: K.secondColor,
-          elevation: 0,
+          elevation: 1,
           title:  Text(
             "Check Out",
             style: GoogleFonts.aBeeZee(
@@ -87,6 +87,9 @@ class OrderScreen extends StatelessWidget {
                                     width: 200,
                                     child: TextButton(
                                       style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)
+                                        ),
                                           backgroundColor: K.mainColor),
                                       onPressed: () {
                                         _controller.sendOrder();

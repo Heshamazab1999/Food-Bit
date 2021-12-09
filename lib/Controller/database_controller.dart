@@ -1,5 +1,4 @@
 import 'package:app/Controller/base_controller.dart';
-import 'package:app/Routes/app_routes.dart';
 import 'package:app/constant.dart';
 import 'package:app/enum/enums.dart';
 import 'package:app/models/sqllite_model.dart';
@@ -31,19 +30,12 @@ class DataBaseController extends BaseController {
   insertProduct(SqlLiteModel sqlLiteModel, BuildContext context) async {
     for (int i = 0; i < _sqlLiteModel.length; i++) {
       if (_sqlLiteModel[i].name == sqlLiteModel.name) {
-        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: K.mainColor,
-          width: 200,
-          duration: Duration(seconds: 1),
-          content: Text(
-            "Added Before Time",
-            style: TextStyle(
-              fontSize: 18,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          behavior: SnackBarBehavior.floating,
-        ));
+        return Get.snackbar("", "",
+            forwardAnimationCurve: Curves.easeOutBack,
+            barBlur: 20,
+            titleText: Center(child: Text("Filed")),
+            messageText: Center(child: Text("Added Before")),
+            snackPosition: SnackPosition.BOTTOM);
       }
     }
     var db = DataBaseServices.db;
@@ -55,22 +47,20 @@ class DataBaseController extends BaseController {
       _totalPrice.value += double.parse(sqlLiteModel.price);
     }
     print(_totalPrice);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: K.mainColor,
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 2),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Added To Cart"),
-          TextButton(
-              onPressed: () {
-                Get.toNamed(AppRoute.cart_screen);
-              },
-              child: Text("Check"))
-        ],
-      ),
-    ));
+    Get.snackbar("", "",
+        forwardAnimationCurve: Curves.easeOutBack,
+        backgroundColor: K.SnackColor,
+        titleText: Center(
+            child: Text(
+          "Success",
+          style: TextStyle(color: K.secondColor, fontSize: 18),
+        )),
+        messageText: Center(
+            child: Text(
+          "Added",
+          style: TextStyle(color: K.secondColor, fontSize: 18),
+        )),
+        snackPosition: SnackPosition.BOTTOM);
     update();
   }
 

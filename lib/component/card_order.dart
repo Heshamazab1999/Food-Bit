@@ -34,7 +34,6 @@ class CardOrder extends StatelessWidget {
                     decoration: BoxDecoration(shape: BoxShape.circle),
                     child: LoadImage(
                       image: image,
-                      loadImage: "assets/images/loading.svg",
                     )),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),

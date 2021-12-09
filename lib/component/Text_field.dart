@@ -17,33 +17,34 @@ class CustomTextField extends StatelessWidget {
   final String initialValue;
   final bool isPassword;
   final Color errorColor;
-  final Icon icon;
+  final IconButton icon;
   final String hint;
   final Color color;
   final Color fillColor;
+  final InputDecoration inputDecoration;
 
-  CustomTextField(
-      {this.padding,
-      this.fillColor,
-      this.hint,
-      this.onChanged,
-      this.label,
-      this.errorLabel,
-      this.controller,
-      this.onTap,
-      this.initialValue,
-      this.isPassword = false,
-      this.errorColor = Colors.red,
-      this.type = TextInputType.text,
-      this.maxLines = 1,
-      this.icon,
-      this.color,
-      this.isReadOnly = false});
+  CustomTextField({this.padding,
+    this.inputDecoration,
+    this.fillColor,
+    this.hint,
+    this.onChanged,
+    this.label,
+    this.errorLabel,
+    this.controller,
+    this.onTap,
+    this.initialValue,
+    this.isPassword = false,
+    this.errorColor = Colors.red,
+    this.type = TextInputType.text,
+    this.maxLines = 1,
+    this.icon,
+    this.color,
+    this.isReadOnly = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:40, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,10 +54,9 @@ class CustomTextField extends StatelessWidget {
             height: 43,
             child: TextFormField(
                 cursorColor: Colors.black,
-                cursorHeight: 30,
+                cursorHeight: 25,
                 initialValue: initialValue,
                 style: K.textFieldTextStyle.copyWith(
-
                   fontWeight: FontWeight.bold,
                   fontSize: 19,
                 ),
@@ -65,15 +65,17 @@ class CustomTextField extends StatelessWidget {
                 onTap: onTap,
                 obscureText: isPassword,
                 textAlign: TextAlign.center,
-                decoration: K.textFieldDecoration.copyWith(
+                decoration: inputDecoration.copyWith(
                   filled: true,
                   suffixIcon: icon,
                   hintText: hint,
                   labelText: label,
                   fillColor: fillColor,
-                  labelStyle: TextStyle(color: color,),
+                  labelStyle: TextStyle(
+                    color: color,
+                  ),
                   contentPadding:
-                      EdgeInsets.only(left: padding != null ? padding : 8),
+                  EdgeInsets.only(left: padding != null ? padding : 8),
                 ),
                 onChanged: onChanged),
           ),

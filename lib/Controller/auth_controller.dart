@@ -14,11 +14,10 @@ class AuthController extends BaseController {
   final _services = new AuthServices();
 
   bool get isLogged => _isLogged.value;
-
   UserModel get currentUser => _currentUser.value;
 
   @override
-  Future<void> onInit() async{
+  Future<void> onInit() async {
     super.onInit();
     setSate(ViewState.busy);
     requestImagePermission();
@@ -34,10 +33,12 @@ class AuthController extends BaseController {
   }
 
   Future<bool> requestImagePermission() async {
-    final permissions = await [Permission.accessMediaLocation].request();
-    if (Platform.isAndroid && permissions[Permission.accessMediaLocation].isGranted) {
+    final permissions = await [Permission.location].request();
+    if (Platform.isAndroid &&
+        permissions[Permission.location].isRestricted) {
       return true;
-    } else if (Platform.isIOS && permissions[Permission.accessMediaLocation].isGranted) {
+    } else if (Platform.isIOS &&
+        permissions[Permission.location].isRestricted) {
       return true;
     }
     return false;

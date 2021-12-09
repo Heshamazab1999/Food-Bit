@@ -1,13 +1,13 @@
 import 'package:app/Controller/auth_controller.dart';
 import 'package:app/Controller/base_controller.dart';
 import 'package:app/Controller/database_controller.dart';
-import 'package:app/Controller/profile_controller.dart';
 import 'package:app/enum/enums.dart';
 import 'package:app/models/sqllite_model.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/services/order_services.dart';
 import 'package:app/models/order_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 class OrderController extends BaseController {
   OrderServices orderServices = new OrderServices();
@@ -19,6 +19,8 @@ class OrderController extends BaseController {
   final _price = ''.obs;
   final _quantity = ''.obs;
   RxBool _saving = false.obs;
+  Position _position = new Position();
+  final _address = ''.obs;
 
   String get name => _name.value;
 
@@ -34,17 +36,58 @@ class OrderController extends BaseController {
 
   bool get saving => _saving.value;
 
+  Position get position => _position;
+
+  String get address => _address.value;
+
   @override
   onInit() async {
     super.onInit();
     setSate(ViewState.busy);
     DataBaseController.to.getAllProducts();
+    await determinePosition();
+    // await getCityName();
     setSate(ViewState.idle);
   }
 
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error(
+            'Location permissions are permanently denied, we cannot request permissions.');
+      }
+
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    return _position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high
+
+    );
+  }
+
+  // getCityName() async {
+  //   final addresses = await Geocoder.local.findAddressesFromCoordinates(
+  //       new Coordinates(position.latitude, position.longitude));
+  //   var first = addresses.first.addressLine;
+  //   _address.value = first.toString();
+  //   var moonLanding = DateTime.parse(position.timestamp.toString());
+  //   print(moonLanding);
+  // }
+
   Future<void> makePhoneCall(String url) async {
     if (await canLaunch(url)) {
-      await launch(url);
+       launch(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -59,8 +102,8 @@ class OrderController extends BaseController {
             .to.sqlLiteModel[_sqlLiteModel.length].quantity
             .toString(),
         price: DataBaseController.to.sqlLiteModel[_sqlLiteModel.length].price,
-        country: ProfileController.to.address.capitalizeFirst.toString(),
-        street: ProfileController.to.position.toString(),
+        country: address.capitalizeFirst.toString(),
+        street: position.toString(),
         account: AuthController.to.currentUser.username,
         accountName: AuthController.to.currentUser.name,
         phone: AuthController.to.currentUser.phone,

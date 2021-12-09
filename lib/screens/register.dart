@@ -25,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical:15),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
                           child: Column(
                             children: [
                               SizedBox(
@@ -75,6 +75,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Obx(
                           () => CustomTextField(
+                            inputDecoration: K.textFieldDecoration,
                             label: "Full Name",
                             errorLabel: _controller.name.error,
                             controller: _controller.editingControllerName,
@@ -87,6 +88,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Obx(
                           () => CustomTextField(
+                            inputDecoration: K.textFieldDecoration,
                             label: "Email Address",
                             color: K.IconColor,
                             controller: _controller.editingControllerUserName,
@@ -99,17 +101,25 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Obx(
                           () => CustomTextField(
+                            inputDecoration: K.textFieldDecoration,
                             label: "Password",
-                            isPassword: true,
                             type: TextInputType.number,
                             errorLabel: _controller.password.error,
                             fillColor: K.TextFieldColor,
                             controller: _controller.editingControllerPassword,
                             color: K.IconColor,
-                            icon: Icon(
-                              Icons.remove_red_eye_outlined,
-                              color: K.IconColor,
-                            ),
+                            isPassword: _controller.isPassword,
+                            icon: _controller.isPassword
+                                ? IconButton(
+                                    onPressed: () {
+                                      _controller.change();
+                                    },
+                                    icon: Icon(Icons.visibility))
+                                : IconButton(
+                                    onPressed: () {
+                                      _controller.change();
+                                    },
+                                    icon: Icon(Icons.visibility_off)),
                             onChanged: (password) {
                               _controller.changePassword(password);
                             },
@@ -117,28 +127,21 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 4),
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                color: K.TextFieldColor,
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: K.IconColor)),
-                            child: Obx(
-                              () => IntlPhoneField(
-                                controller: _controller.editingControllerPhone,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                    hintText: "phone number",
-                                    errorText: _controller.phone.error,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                        borderSide: BorderSide.none)),
-                                initialCountryCode: 'EG',
-                                onChanged: (x) {
-                                  _controller.changePhone(x.number);
-                                },
+                              horizontal: 40, vertical: 4),
+                          child: Obx(
+                            () => IntlPhoneField(
+                              keyboardType: TextInputType.number,
+                              controller: _controller.editingControllerPhone,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                hintText: "phone number",
+                                errorText: _controller.phone.error,
                               ),
+                              initialCountryCode: 'EG',
+                              onChanged: (x) {
+                                _controller
+                                    .changePhone(x.countryCode + x.number);
+                              },
                             ),
                           ),
                         ),

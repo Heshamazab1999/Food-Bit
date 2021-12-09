@@ -12,8 +12,7 @@ class OrderModel {
   String account;
 
   OrderModel(
-      {
-      this.quantity,
+      {this.quantity,
       this.name,
       this.price,
       this.country,
@@ -23,17 +22,17 @@ class OrderModel {
       this.key,
       this.street});
 
-  OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final json = snapshot.data();
-    name = json['name'];
-    price = json['price'];
-    street = json['street'];
-    country = json['country'];
-    quantity = json['quantity'];
-    phone=json['phone'];
-    account=json['account'];
-    accountName=json['accountName'];
-    key = snapshot.id;
+  factory OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
+    return OrderModel(
+        name: snapshot['name'],
+        price: snapshot['price'],
+        street: snapshot['street'],
+        country: snapshot['country'],
+        quantity: snapshot['quantity'],
+        phone: snapshot['phone'],
+        account: snapshot['account'],
+        accountName: snapshot['accountName'],
+        key: snapshot.id);
   }
 
   Map<String, dynamic> toJson() {
@@ -43,9 +42,9 @@ class OrderModel {
     map['street'] = street;
     map['country'] = country;
     map['quantity'] = quantity;
-    map['accountName']=accountName;
-    map['account']=account;
-    map['phone']=phone;
+    map['accountName'] = accountName;
+    map['account'] = account;
+    map['phone'] = phone;
     return map;
   }
 }

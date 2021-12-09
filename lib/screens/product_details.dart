@@ -1,5 +1,5 @@
 import 'package:app/Controller/database_controller.dart';
-import 'package:app/Controller/profile_controller.dart';
+import 'package:app/Controller/product_details_controller.dart';
 import 'package:app/Routes/app_routes.dart';
 import 'package:app/constant.dart';
 import 'package:app/models/category_model.dart';
@@ -13,6 +13,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
 class ProductDetails extends StatelessWidget {
+  final _controller = Get.put(ProductController());
+
   final CategoryModel categoryModel;
 
   ProductDetails({this.categoryModel});
@@ -36,7 +38,9 @@ class ProductDetails extends StatelessWidget {
                         image: categoryModel.image,
                       ),
                       SubContainerDetails(
+                        color: _controller.change ? K.SnackColor : K.mainColor,
                         function: () {
+                          _controller.changes();
                           DataBaseController.to.insertProduct(
                               SqlLiteModel(
                                 name: categoryModel.name,
@@ -54,7 +58,7 @@ class ProductDetails extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,14 +70,11 @@ class ProductDetails extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    Text(ProfileController.to.now.hour
-                                        .toString()),
+                                    Text(_controller.now.hour.toString()),
                                     Text(":"),
-                                    Text(ProfileController.to.now.minute
-                                        .toString()),
+                                    Text(_controller.now.minute.toString()),
                                     Text(":"),
-                                    Text(ProfileController.to.now.second
-                                        .toString()),
+                                    Text(_controller.now.second.toString()),
                                   ],
                                 )
                               ],
@@ -89,7 +90,7 @@ class ProductDetails extends StatelessWidget {
                                 SizedBox(
                                   width: 80,
                                   child: AutoSizeText(
-                                      "${ProfileController.to.distance.toInt().toString()}Km",
+                                      "${_controller.distance.toInt().toString()}Km",
                                       maxLines: 1,
                                       style: GoogleFonts.aBeeZee(
                                         fontSize: 20,

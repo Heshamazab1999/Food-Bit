@@ -7,7 +7,7 @@ class K {
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: K.BlackColor),
         borderRadius: BorderRadius.all(
-          Radius.circular(5),
+          Radius.circular(20),
         ),
       ),
       enabledBorder: OutlineInputBorder(
@@ -15,6 +15,7 @@ class K {
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           )));
+  static const textFieldDecorationEdit = InputDecoration();
   static const textFieldSearchDecoration = InputDecoration(
     prefixIcon: Icon(
       Icons.search_outlined,
@@ -44,15 +45,12 @@ class K {
     ),
   );
 
-
-
-
-
   static const mainColor = Color(0xFFfc4041);
   static const secondColor = Colors.white;
   static const BlackColor = Color(0xFF090909);
   static const IconColor = Colors.grey;
   static const TextFieldColor = Color(0xFFfafafa);
+  static const SnackColor = Color(0xFF2fc890);
 
   static final String tableCartProduct = "cartProduct";
   static final String tableCartFavourite = "cartFavourite";

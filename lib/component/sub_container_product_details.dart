@@ -10,9 +10,10 @@ class SubContainerDetails extends StatelessWidget {
   final String price;
   final String review;
   final Function function;
+  final Color color;
 
   SubContainerDetails(
-      {this.function, this.label, this.price, this.review, this.name});
+      {this.function, this.label, this.price, this.review, this.name,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +74,23 @@ class SubContainerDetails extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SizedBox(
+                           SizedBox(
                               height: 40,
                               width: 150,
                               child: TextButton(
                                 style: TextButton.styleFrom(
-                                    backgroundColor: K.mainColor),
+                                    backgroundColor:color),
                                 onPressed: function,
-                                child: Text(
-                                  "Add To Cart",
-                                  style: GoogleFonts.aBeeZee(
-                                      fontSize: 20, color: Colors.white),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Add To Cart",
+                                      style: GoogleFonts.aBeeZee(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    Expanded(
+                                        child: Icon(Icons.shopping_cart,color: K.secondColor,))
+                                  ],
                                 ),
                               )),
                         ],

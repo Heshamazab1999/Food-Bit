@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app/Controller/auth_controller.dart';
 import 'package:app/models/register_model.dart';
 import 'package:app/services/auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,17 @@ class SignUpServices {
     UserModel createdUser = await addNewUser(userModel, image);
     _authServices.updateStorage(createdUser);
     return createdUser;
+  }
+
+  Future<UserModel> updateUser(UserModel userModel, String image) async {
+    if (image != null && image.isNotEmpty) {
+      userModel.image = await uploadImage(image, "123456789");
+    }
+    final ref = await _fireStore
+        .collection("users")
+        .doc(AuthController.to.currentUser.key)
+        .update(userModel.toJson());
+    return null;
   }
 
   Future<UserModel> addNewUser(UserModel userModel, String image) async {

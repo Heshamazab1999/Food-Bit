@@ -1,5 +1,6 @@
 import 'package:app/screens/cart_screen.dart';
 import 'package:app/screens/category_screen.dart';
+import 'package:app/screens/edit_profile.dart';
 import 'package:app/screens/login_screen.dart';
 import 'package:app/screens/map_screen.dart';
 import 'package:app/screens/order-screen.dart';
@@ -57,6 +58,9 @@ class AppScreen {
     ),GetPage(
       name: AppRoute.my_location_screen,
       page: () => MyLocationScreen(),
+    ),GetPage(
+      name: AppRoute.edit_profile,
+      page: () => EditProfile(),
     ),
   ];
 }

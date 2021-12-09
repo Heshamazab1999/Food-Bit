@@ -17,12 +17,13 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 50,
-        width: 180,
+        height: 40,
+        width: 150,
         child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: K.mainColor
-        ),
+          style: TextButton.styleFrom(
+              backgroundColor: K.mainColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20))),
           onPressed: function,
           child: Text(
             label,

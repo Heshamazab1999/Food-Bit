@@ -7,15 +7,16 @@ class ProductDetailsModel {
   String price;
   String key;
 
-  ProductDetailsModel({this.image, this.name,this.nameFood, this.price, this.key});
+  ProductDetailsModel(
+      {this.image, this.name, this.nameFood, this.price, this.key});
 
-  ProductDetailsModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final json = snapshot.data();
-    image = json['image'];
-    name = json['name'];
-    nameFood = json['nameFood'];
-    price = json['price'];
-    key = snapshot.id;
+  factory ProductDetailsModel.fromSnapshot(DocumentSnapshot snapshot) {
+    return ProductDetailsModel(
+        image: snapshot['image'],
+        name: snapshot['name'],
+        nameFood: snapshot['nameFood'],
+        price: snapshot['price'],
+        key: snapshot.id);
   }
 
   Map<String, dynamic> toJson() {
