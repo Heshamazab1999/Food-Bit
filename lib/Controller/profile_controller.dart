@@ -5,29 +5,29 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:collection';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class ProfileController extends BaseController {
   static ProfileController to = Get.find();
   var _marker = HashSet<Marker>().obs;
   final _address = ''.obs;
   Position _position = new Position();
- // final _distance = 0.0.obs;
- // List _favouriteModel = <FavouriteModel>[].obs;
- // final _isData = true.obs;
+
+  // final _distance = 0.0.obs;
+  // List _favouriteModel = <FavouriteModel>[].obs;
+  // final _isData = true.obs;
 
   Position get position => _position;
 
- // bool get isData => _isData.value;
-
+  // bool get isData => _isData.value;
 
   String get address => _address.value;
 
   HashSet<Marker> get marker => _marker.value;
 
- // List<FavouriteModel> get favouriteModel => _favouriteModel;
+  // List<FavouriteModel> get favouriteModel => _favouriteModel;
 
- // double get distance => _distance.value;
-
+  // double get distance => _distance.value;
 
   @override
   Future<void> onInit() async {
@@ -35,13 +35,12 @@ class ProfileController extends BaseController {
     setSate(ViewState.busy);
     //await requestPositionPermission();
     await determinePosition();
+    await GetAddressFromLatLong();
     // await getCityName();
-   // myPolygon();
-   // getAllProducts();
+    // myPolygon();
+    // getAllProducts();
     setSate(ViewState.idle);
   }
-
-
 
   // insertProduct(FavouriteModel favouriteModel, BuildContext context) async {
   //   for (int i = 0; i < _favouriteModel.length; i++) {
@@ -99,13 +98,8 @@ class ProfileController extends BaseController {
       }
     }
     return _position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high
-    );
+        desiredAccuracy: LocationAccuracy.high);
   }
-
-
-
-
 
   markLocation() {
     marker.add(
@@ -138,14 +132,21 @@ class ProfileController extends BaseController {
     return polygonSet;
   }
 
-  // getCityName() async {
-  //   final addresses = await Geocoder.local.findAddressesFromCoordinates(
-  //       new Coordinates(position.latitude, position.longitude));
-  //   var first = addresses.first.addressLine;
-  //   _address.value = first.toString();
-  //   var moonLanding = DateTime.parse(position.timestamp.toString());
-  //   print(moonLanding);
-  // }
-
+  Future<void> GetAddressFromLatLong() async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    print(placemarks);
+    Placemark place = placemarks[0];
+    _address.value =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+  }
+// getCityName() async {
+//   final addresses = await Geocoder.local.findAddressesFromCoordinates(
+//       new Coordinates(position.latitude, position.longitude));
+//   var first = addresses.first.addressLine;
+//   _address.value = first.toString();
+//   var moonLanding = DateTime.parse(position.timestamp.toString());
+//   print(moonLanding);
+// }
 
 }
