@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app/component/food_cart.dart';
 import 'package:app/component/mathimatical-conatiner.dart';
 import 'package:get/get.dart';
+import 'package:badges/badges.dart';
 
 class CartScreen extends StatelessWidget {
   final _controller = Get.put(DataBaseController());
@@ -31,13 +32,22 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: Badge(
+                animationType:
+                BadgeAnimationType.scale,
+                badgeColor: K.mainColor,
+                badgeContent: Text(
+                  DataBaseController.to.sqlLiteModel.length.toString(),
+                  style: TextStyle(color: K.secondColor),
+                ),
+                child: Icon(
                 Icons.shopping_cart_outlined,
                 color: K.mainColor,
                 size: 30,
               ),
             ),
-          )
+            )),
+          SizedBox(width: 10,),
         ],
       ),
       body: Obx(

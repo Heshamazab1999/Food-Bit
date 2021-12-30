@@ -31,7 +31,7 @@ class SignUpServices {
         .collection("users")
         .doc(AuthController.to.currentUser.key)
         .update(userModel.toJson());
-    return null;
+    return userModel;
   }
 
   Future<UserModel> addNewUser(UserModel userModel, String image) async {

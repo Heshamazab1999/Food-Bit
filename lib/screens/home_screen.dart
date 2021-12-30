@@ -1,3 +1,4 @@
+import 'package:app/Controller/database_controller.dart';
 import 'package:app/constant.dart';
 import 'package:app/screens/cart_screen.dart';
 import 'package:app/screens/profile_screen.dart';
@@ -7,6 +8,7 @@ import 'package:app/Controller/base_controller.dart';
 import 'package:app/screens/category_screen.dart';
 import 'package:app/screens/map_screen.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:badges/badges.dart';
 
 class HomeScreen extends StatelessWidget {
   final _controller = Get.put(BaseController());
@@ -41,7 +43,15 @@ class HomeScreen extends StatelessWidget {
                 title: Text("Near By"),
               ),
               CustomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag),
+                icon:Badge(
+                  animationType:
+                    BadgeAnimationType.scale,
+                    badgeColor: K.mainColor,
+                    badgeContent:  Text(
+                          DataBaseController.to.sqlLiteModel.length.toString(),
+                          style: TextStyle(color: K.secondColor),
+                        ),
+                    child: Icon(Icons.shopping_cart)),
                 title: Text("Cart"),
               ),
               CustomNavigationBarItem(

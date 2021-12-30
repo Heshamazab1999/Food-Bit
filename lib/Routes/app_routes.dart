@@ -12,4 +12,5 @@ class AppRoute {
   static const location_between_screen = 'Location_Between_Screen';
   static const my_location_screen = 'My_Location_Screen';
   static const edit_profile = 'Edit_Profile';
+
 }

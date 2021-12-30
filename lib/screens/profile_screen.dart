@@ -37,8 +37,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Container(
-                      height: 180,
-                      width: 180,
+                      height: 150,
+                      width: 150,
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
                           color: Colors.white, shape: BoxShape.circle),

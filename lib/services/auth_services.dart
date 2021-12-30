@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/Controller/auth_controller.dart';
+
 class AuthServices {
   final _auth = FirebaseAuth.instance;
   final _store = FirebaseFirestore.instance;
