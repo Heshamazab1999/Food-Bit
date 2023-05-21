@@ -101,11 +101,11 @@ class CategoryScreen extends StatelessWidget {
                     else
                       Padding(
                           padding: const EdgeInsets.all(10),
-                          child: StaggeredGridView.countBuilder(
-                            staggeredTileBuilder: (int index) =>
-                                new StaggeredTile.count(
-                                    2, index.isOdd ? 2.1 : 2.2),
-                            crossAxisCount: 4,
+                          child: GridView.builder(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10
+                            ),
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemCount: _controller.isSearched
